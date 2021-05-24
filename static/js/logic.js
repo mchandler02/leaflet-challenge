@@ -26,10 +26,28 @@ d3.json(url).then(function (response) {
         var location = response.features[i].geometry;
         var magnitude = response.features[i].properties.mag;
         var depth = response.features[i].geometry.coordinates[2];
+        if (depth <100){
+            var color = "#ffff00"
+        }
+        else if (depth <200) {
+            var color = "#ffcc00"
+        }
+        else if (depth <300) {
+            var color = "#ff9900"
+        }
+        else if (depth <400) {
+            var color = "#ff6600"
+        }
+        else if (depth <500) {
+            var color = "#ff3300"
+        }
+        else {
+            var color = "#ff0000"
+        };
         // console.log(location)
         if (location) {
-            myMap.addLayer(L.circleMarker([location.coordinates[1], location.coordinates[0]], {radius: magnitude*2})
-            .bindPopup("<h3>" + "Magnitude: " + magnitude + "</h3>"+ "<h3>"+ "Depth: " + depth));
+            myMap.addLayer(L.circleMarker([location.coordinates[1], location.coordinates[0]], {radius: magnitude*1.5, color: color})
+            .bindPopup("<h3>" + "Magnitude: " + magnitude + "</h3>"+ "<h3>"+ "Depth: " + depth + "</h3>"));
         }
         console.log(location.coordinates[2]);
     }
