@@ -24,11 +24,14 @@ d3.json(url).then(function (response) {
     console.log(response.features.length)
     for (var i = 0; i < response.features.length; i++) {
         var location = response.features[i].geometry;
+        var magnitude = response.features[i].properties.mag;
+        var depth = response.features[i].geometry.coordinates[2];
         // console.log(location)
         if (location) {
-            myMap.addLayer(L.circleMarker([location.coordinates[1], location.coordinates[0]]).bindPopup(response.features[i].properties.place));
+            myMap.addLayer(L.circleMarker([location.coordinates[1], location.coordinates[0]], {radius: magnitude*2})
+            .bindPopup("<h3>" + "Magnitude: " + magnitude + "</h3>"+ "<h3>"+ "Depth: " + depth));
         }
-        console.log(typeof location.coordinates[1]);
+        console.log(location.coordinates[2]);
     }
 }
 )
