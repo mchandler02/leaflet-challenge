@@ -11,35 +11,24 @@ L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     tileSize: 512,
     maxZoom: 18,
     zoomOffset: -1,
-    id: "mapbox/light-v10", //many different types of maps available
+    id: "mapbox/light-v10", 
     accessToken: API_KEY
-}).addTo(myMap); //this is what adds the tile layer to the map
+}).addTo(myMap); 
 // console.log(myMap)
 
 var url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_week.geojson";
 
-
-// LOOK INTO--NO MARKERS DISPLAYING
-d3.json(url).then(function(response) {
-    // console.log(L.mapbox)
-    // var myLayer = L.mapbox.featuerLayer().setGeoJSON(response.feature).addTo(myMap);
-    // console.log(myLayer)
-    // console.log(response)
-    var markers = L.marker();
+d3.json(url).then(function (response) {
+    var markers = L.circleMarker();
     console.log(markers)
     console.log(response.features.length)
     for (var i = 0; i < response.features.length; i++) {
         var location = response.features[i].geometry;
-        console.log(location)
-        // if (location) {
-        //     markers.addLayer(L.marker([location.coordinates[1], location.coordinates[0]]))
-        //     .bindPopup(response[i].properties.place);
-        // }
+        // console.log(location)
         if (location) {
-            myMap.addLayer(L.marker([location.coordinates[1], location.coordinates[0]]).bindPopup(response.features[i].properties.place));
+            myMap.addLayer(L.circleMarker([location.coordinates[1], location.coordinates[0]]).bindPopup(response.features[i].properties.place));
         }
         console.log(typeof location.coordinates[1]);
     }
-    // myMap.addLayer(markers)
 }
 )
